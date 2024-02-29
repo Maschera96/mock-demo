@@ -37,16 +37,50 @@ module.exports = [
         method: 'get',
         response(ctx) {
             console.log('ctx', ctx.url)
-            const { url = '' } = ctx
+            const { url = '', query = {} } = ctx
             const isDeleted = url.indexOf('isDeleted=true') >= 0
             const isStar = url.indexOf('isStar=true') >= 0
+            const pageSize = parseInt(query.pageSize) || 10
 
             return {
                 errno: 0,
                 data: {
-                    list: getQuestionList({ isDeleted, isStar }),
+                    list: getQuestionList({ len: pageSize, isDeleted, isStar }),
                     total: 100
                 }
+            }
+        }
+    },
+    {
+        // 更新问卷
+        url: '/api/question/:id',
+        method: 'patch',
+        response() {
+            return {
+                errno: 0
+            }
+        }
+    },
+    {
+        // 复制问卷
+        url: '/api/question/duplicate/:id',
+        method: 'post',
+        response() {
+            return {
+                errno: 0,
+                data: {
+                    id: Random.id()
+                }
+            }
+        }
+    },
+    {
+        // 批量彻底删除
+        url: '/api/question',
+        method: 'delete',
+        response() {
+            return {
+                errno: 0,
             }
         }
     }

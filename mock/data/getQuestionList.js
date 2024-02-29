@@ -11,7 +11,7 @@ function getQuestionList(opt = {}) {
             isPublished: Random.boolean(),
             isStar,
             answerCount: Random.natural(50, 100),
-            createAt: Random.datetime(),
+            createdAt: Random.datetime(),
             isDeleted,
         })
     }
